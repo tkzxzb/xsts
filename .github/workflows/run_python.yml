@@ -1,35 +1,25 @@
-name: Run Python Script
+name: Python Workflow
 
-on:
-  push:
-    branches:
-      - main  # 触发分支，可以根据需要更改
+on: [push]
 
 jobs:
-  run_script:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.x  # 指定Python版本
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8  # 指定所需的 Python 版本
 
-      - name: Install dependencies
-        run: |
-          pip install requests  # 安装requests模块
-          pip install -r requirements.txt  # 安装其他依赖（如果有的话）
-
-      - name: Run Python script
-        run: python main.py
-
-      - name: Commit and push changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add A.txt
-          git commit -m "Update A.txt"
-          git push
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+      working-directory: ${{ github.workspace }}
+    
+    - name: Run Python script
+      run: python main.py # 替换为你的 Python 脚本文件名
