@@ -45,9 +45,7 @@ if response.status_code == 200:
     else:
         print("未找到指定元素")
 else:
-    print("无法访问指定URL")
-'
-
+    print("无法访问指定URL")'
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
